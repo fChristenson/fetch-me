@@ -1,0 +1,8 @@
+.app__header {
+  font-size: var(--font-size-h1) !important;
+}
+
+.app__search {
+  background: white;
+  max-height: 44px;
+}

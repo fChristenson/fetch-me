@@ -1,0 +1,14 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-size-h1: 24px;
+
+  --margin-md: 12px;
+  --margin-sm: 8px;
+
+  --color-primary: #3F51B5;
+}

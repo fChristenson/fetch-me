@@ -1,0 +1,12 @@
+.logo-crop {
+  width: 100%;
+  padding: calc(var(--margin-md) * 2);
+}
+
+.logo-crop__react-crop {
+  background: white;
+}
+
+.logo-crop__button {
+  display: block !important;
+}
