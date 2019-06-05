@@ -21,7 +21,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-image-crop": "^7.0.3",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -30,6 +31,8 @@
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.3",
+    "@types/socket.io": "^2.1.2",
+    "@types/socket.io-client": "^1.4.32",
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.19.1",
     "postcss": "^7.0.16",
