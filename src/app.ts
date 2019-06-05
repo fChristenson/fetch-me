@@ -1,6 +1,7 @@
 import {Request, Response } from "express";
 import path from "path";
 import express from "express";
+import axios from "axios";
 import { searchService, scrapeService } from "./lib/services";
 
 export const app = express();
@@ -18,13 +19,17 @@ app.get("/api/v1/screenshot", async (req: Request, res: Response) => {
 });
 
 app.get("/api/v1/scrape-images", async (req: Request, res: Response) => {
-  const image = await scrapeService.scrapeImages(req.query.url);
-  res.json(image);
+  const images = await scrapeService.scrapeImages(req.query.url);
+  res.json(images);
 });
 
 app.get("/api/v1/download-image", async (req: Request, res: Response) => {
-  const image = await scrapeService.scrapeImages(req.query.url);
-  res.json(image);
+  const response = await axios.request({
+    url: req.query.q,
+    method: "GET",
+    responseType: "stream",
+  });
+  await response.data.pipe(res);
 });
 
 app.get("/api/v1/scrape-emails", async (_: Request, res: Response) => {

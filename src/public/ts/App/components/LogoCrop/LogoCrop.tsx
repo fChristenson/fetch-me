@@ -3,7 +3,8 @@ import { withAppContext } from "../../../store/store";
 import { IContextProps } from "../../../store/State";
 // @ts-ignore
 import ReactCrop from "react-image-crop";
-import { Typography, Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { ICrop, getCroppedImg } from "./crop";
 
 interface ILogoCropState {
@@ -25,10 +26,10 @@ class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
       <div className="logo-crop">
         <ReactCrop
           className="logo-crop__react-crop"
-          onChange={this.onChange}
           onImageLoaded={this.onImageLoaded}
+          onChange={this.onChange}
           crop={this.state.crop}
-          src={this.props.context.selectedImage} />
+          src={`/api/v1/download-image?q=${this.props.context.selectedImage}`} />
         <Button
           variant="contained"
           color="primary"

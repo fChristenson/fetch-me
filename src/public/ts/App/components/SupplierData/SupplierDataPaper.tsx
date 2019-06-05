@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { Loader } from "../Loader/Loader";
-import { Switch } from "@material-ui/core";
+import Switch from "@material-ui/core/Switch";
 
 interface ISupplierDataPaperProps {
   title: string;

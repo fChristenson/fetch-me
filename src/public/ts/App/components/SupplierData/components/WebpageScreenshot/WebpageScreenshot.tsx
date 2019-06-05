@@ -1,5 +1,5 @@
 import React from "react";
-import { IScreenshot } from "../../../../../../../lib/services/ScrapeService/Screenshot";
+import { IImage } from "../../../../../../../lib/services/ScrapeService/Image";
 import { ISearchResult } from "../../../../../../../lib/services/SearchService/SearchResult";
 import { SupplierDataPaper } from "../../SupplierDataPaper";
 
@@ -9,7 +9,7 @@ interface IWebpageScreenshotProps {
 
 interface IWebpageScreenshotState {
   loading: boolean;
-  screenshot?: IScreenshot;
+  screenshot?: IImage;
 }
 
 export class WebpageScreenshot extends React.Component<IWebpageScreenshotProps, IWebpageScreenshotState> {
@@ -22,13 +22,13 @@ export class WebpageScreenshot extends React.Component<IWebpageScreenshotProps, 
   public async componentDidMount() {
     if (this.props.result && this.props.result.href) {
       const res = await fetch(`/api/v1/screenshot?url=${this.props.result.href}`);
-      const screenshot: IScreenshot = await res.json();
+      const screenshot: IImage = await res.json();
       this.setState({screenshot});
     }
   }
 
   public render() {
-    const imgLink = this.state.screenshot && `/${this.state.screenshot.image}`;
+    const imgLink = this.state.screenshot && `/${this.state.screenshot.imageUrl}`;
     const pageHref = this.props.result && this.props.result.href;
 
     return (

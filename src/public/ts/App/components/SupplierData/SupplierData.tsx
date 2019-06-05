@@ -2,13 +2,13 @@ import React from "react";
 import { withAppContext } from "../../../store/store";
 import { IContextProps } from "../../../store/State";
 import { WebpageScreenshot } from "./components/WebpageScreenshot/WebpageScreenshot";
-import { IScreenshot } from "../../../../../lib/services/ScrapeService/Screenshot";
+import { IImage } from "../../../../../lib/services/ScrapeService/Image";
 import { WebpageImages } from "./components/WebpageImages/WebpageImages";
 import { WebpageEmails } from "./components/WebpageEmails/WebpageEmails";
 import { SupplierDataForm } from "./components/SupplierDataForm/SupplierDataForm";
 
 interface ISupplierDataState {
-  screenshot?: IScreenshot;
+  screenshot?: IImage;
 }
 
 class SupplierDataComponent extends React.Component<IContextProps, ISupplierDataState> {

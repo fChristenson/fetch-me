@@ -43,8 +43,18 @@
   align-items: center;
 }
 
+.supplier-data__thumbnail-dimensions--white,
+.supplier-data__thumbnail-dimensions {
+  text-align: center !important;
+}
+
+.supplier-data__thumbnail-dimensions--white {
+  color: white;
+}
+
 .supplier-data__images-thumbnail-container--dark,
 .supplier-data__images-thumbnail-container {
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: var(--margin-sm);
@@ -58,7 +68,7 @@
 
 .supplier-data__images-thumbnail--selected,
 .supplier-data__images-thumbnail {
-  width: 100px;
+  width: 100%;
   max-height: 200px;
 }
 

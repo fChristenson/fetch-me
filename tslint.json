@@ -5,6 +5,7 @@
     ],
     "jsRules": {},
     "rules": {
+        "import-blacklist": [true, "@material-ui/core", "@material-ui/icons"],
         "no-default-export": true,
         "ordered-imports": false,
         "object-literal-sort-keys": false

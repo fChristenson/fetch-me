@@ -16,3 +16,9 @@
   transform: rotate(360deg);
   animation: spin 1s linear infinite;
 }
+
+.loader-page {
+  padding: calc(var(--margin-md) * 2);
+  display: flex;
+  justify-content: center;
+}

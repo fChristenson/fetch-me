@@ -1,9 +1,9 @@
 import puppeteer from "puppeteer";
 import path from "path";
-import { IScreenshot, Screenshot } from "./Screenshot";
+import { IImage, Image } from "./Image";
 
 export class ScrapeService {
-  public async screenshotPage(url: string): Promise<IScreenshot> {
+  public async screenshotPage(url: string): Promise<IImage> {
     const browser = await puppeteer.launch({
       defaultViewport: {
         width: 1920,
@@ -16,7 +16,7 @@ export class ScrapeService {
     const image = `${name}.png`;
     await page.screenshot({path: path.join(__dirname, "..", "..", "..", "..", "dist", image)});
     await browser.close();
-    return Screenshot(image);
+    return Image(image);
   }
 
   public async scrapeImages(url: string): Promise<string[]> {
@@ -28,8 +28,8 @@ export class ScrapeService {
     });
     const page = await browser.newPage();
     await page.goto(url);
-    // TODO: unit test formatting logic, how to handle inline svg?
-    const images = await page.evaluate(() => {
+    // TODO: unit test formatting logic
+    const result = await page.evaluate(() => {
       const images = Array.from(document.querySelectorAll("img")).map((el) => {
         if (el) {
           return el.src || "";
@@ -53,6 +53,6 @@ export class ScrapeService {
       return images.concat(urls).map((v) => v.trim()).filter((v, i, self) => self.indexOf(v) === i);
     });
 
-    return images.filter((v) => !!v);
+    return result.filter((v) => !!v);
   }
 }

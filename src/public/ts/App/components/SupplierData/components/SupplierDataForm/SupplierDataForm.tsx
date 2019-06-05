@@ -1,7 +1,8 @@
 import React from "react";
 import { IContextProps } from "../../../../../store/State";
 import { withAppContext } from "../../../../../store/store";
-import { TextField, Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 class SupplierDataFormComponent extends React.Component<IContextProps> {
   constructor(props: IContextProps) {

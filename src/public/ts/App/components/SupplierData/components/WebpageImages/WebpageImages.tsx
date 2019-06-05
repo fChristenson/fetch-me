@@ -3,6 +3,7 @@ import { ISearchResult } from "../../../../../../../lib/services/SearchService/S
 import { SupplierDataPaper } from "../../SupplierDataPaper";
 import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
+import { WebpageImage } from "./WebPageImage";
 
 interface IWebpageImagesProps extends IContextProps {
   result?: ISearchResult;
@@ -31,7 +32,7 @@ class WebpageImagesComponent extends React.Component<IWebpageImagesProps, IWebpa
   }
 
   public render() {
-    const q = encodeURI(`${this.props.context.searchQuery} logo`);
+    const q = encodeURI(`${this.props.context.searchQuery} logo png`);
     const titleHref = this.props.result && `https://www.google.com/search?q=${q}&source=lnms&tbm=isch`;
     const containerClassName = this.state.darkBackground ?
     "supplier-data__images-thumbnail-container--dark" :
@@ -43,15 +44,16 @@ class WebpageImagesComponent extends React.Component<IWebpageImagesProps, IWebpa
         variant="switch"
         onSwitch={this.changeBackground}
         loading={this.state.loading}>
-        <div className={ containerClassName }>
-        {this.state.images.map((str, i) => <img
+        <ul className={ containerClassName }>
+        {this.state.images.map((str, i) => <WebpageImage
+          darkBackground={ this.state.darkBackground }
           onClick={this.selectImage}
           className={this.props.context.selectedImage === str ?
             "supplier-data__images-thumbnail--selected" :
             "supplier-data__images-thumbnail"}
           key={i} src={str} />)
         }
-        </div>
+        </ul>
       </SupplierDataPaper>
     );
   }
