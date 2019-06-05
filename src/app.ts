@@ -3,7 +3,7 @@ import path from "path";
 import express from "express";
 import axios from "axios";
 import { searchService, scrapeService } from "./lib/services";
-import { scrapeEmails, downloadImage, scrapeImages, screenshot, search } from "./lib/routes";
+import { downloadImage, scrapeImages, screenshot, search } from "./lib/routes";
 
 export const app = express();
 
@@ -31,10 +31,6 @@ app.get(downloadImage, async (req: Request, res: Response) => {
     responseType: "stream",
   });
   await response.data.pipe(res);
-});
-
-app.get(scrapeEmails, async (_: Request, res: Response) => {
-  res.json([]);
 });
 
 app.get("/*", (_: Request, res: Response) => {

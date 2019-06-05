@@ -9,8 +9,10 @@ export interface IContextProps {
 export interface IContext {
   socket: SocketIOClient.Socket;
   setSelectedResult: (result: ISearchResult) => void;
+  setSelectedEmail: (email: string) => void;
   setSearchQuery: (q: string) => void;
   setSelectedImage: (url: string) => void;
+  selectedEmail?: string;
   selectedResult?: ISearchResult;
   history: History;
   searchQuery: string;
@@ -20,6 +22,7 @@ export interface IContext {
 export const initState: IContext = {
   socket,
   setSelectedResult: () => undefined,
+  setSelectedEmail: () => undefined,
   setSelectedImage: () => undefined,
   setSearchQuery: () => undefined,
   history: createBrowserHistory(),

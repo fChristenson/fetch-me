@@ -10,6 +10,7 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
     super(props);
     this.state = {};
     this.updateLogo = this.updateLogo.bind(this);
+    this.updateEmail = this.updateEmail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -19,8 +20,9 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
         <TextField
           className="supplier-data__form-field"
           fullWidth
+          onChange={this.updateEmail}
           label="Supplier email"
-          value="foo@bar.se"></TextField>
+          value={this.props.context.selectedEmail}></TextField>
         <TextField
           className="supplier-data__form-field"
           fullWidth
@@ -33,6 +35,10 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
           </div>
       </form>
     );
+  }
+
+  private updateEmail(event: React.ChangeEvent<HTMLInputElement>) {
+    this.props.context.setSelectedEmail(event.target.value);
   }
 
   private updateLogo(event: React.ChangeEvent<HTMLInputElement>) {

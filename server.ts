@@ -1,4 +1,6 @@
 import { app } from "./src/app";
+import socketio, { Socket } from "socket.io";
+import { Emails } from "./src/lib/services/ScrapeService/Email";
 
 const port = process.env.PORT || 3000;
 
@@ -8,10 +10,10 @@ const server = app.listen(port, () => {
   console.log("--------------------------");
 });
 
-import socketio from "socket.io";
-
 const io = socketio(server);
 
-io.on("connect", (socket) => {
-  socket.emit("connect");
+io.on("connect", (socket: Socket) => {
+  setInterval(() => {
+    socket.emit("email", Emails(["foo@bar.se", "foo@bar.se", "foo@bar.se", "foo@bar.se", "foo@bar.se", "foo@bar.se", "foo@bar.se"], "localhost:3000"));
+  }, 1000)
 });

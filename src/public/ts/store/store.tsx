@@ -14,9 +14,11 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
     this.setSelectedResult = this.setSelectedResult.bind(this);
     this.setSearchQuery = this.setSearchQuery.bind(this);
     this.setSelectedImage = this.setSelectedImage.bind(this);
+    this.setSelectedEmail = this.setSelectedEmail.bind(this);
     const context = {
       ...initState,
       setSelectedResult: this.setSelectedResult,
+      setSelectedEmail: this.setSelectedEmail,
       setSelectedImage: this.setSelectedImage,
       setSearchQuery: this.setSearchQuery,
     };
@@ -33,6 +35,10 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
 
   private setSelectedResult(selectedResult: ISearchResult) {
     this.setState({context: {...this.state.context, selectedResult}});
+  }
+
+  private setSelectedEmail(email: string) {
+    this.setState({context: {...this.state.context, selectedEmail: email}});
   }
 
   private setSelectedImage(url: string) {

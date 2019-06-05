@@ -91,3 +91,28 @@
 .supplier-data__screenshot:hover {
   cursor: pointer;
 }
+
+.supplier-data__emails {
+  list-style: none;
+}
+
+.supplier-data__emails-result {
+  margin: var(--margin-md) 0;
+}
+
+.supplier-data__emails-result-list {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  padding: var(--margin-sm);
+}
+
+.supplier-data__emails-result-list-item {
+  flex: 0 0 auto;
+  margin-right: var(--margin-sm);
+}
+
+.supplier-data__emails-result-list-item:hover {
+  cursor: pointer;
+  outline: 2px orange dashed;
+}
