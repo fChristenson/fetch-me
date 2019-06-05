@@ -22,11 +22,15 @@ export class WebpageImage extends React.Component<IWebpageImageProps, IWebpageIm
   }
 
   public render() {
-    const className = this.props.darkBackground ?
+    const {
+      darkBackground,
+      ...props
+    } = this.props;
+    const className = darkBackground ?
     "supplier-data__thumbnail-dimensions--white" : "supplier-data__thumbnail-dimensions";
     return (
       <li>
-        <img ref={this.imgRef} {...this.props} onLoad={this.onLoad} />
+        <img ref={this.imgRef} {...props} onLoad={this.onLoad} />
         <Typography
           variant="body2"
           className={ className }>{this.state.width}x{this.state.height}</Typography>

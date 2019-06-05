@@ -4,7 +4,7 @@ export const screenshot = "/api/v1/search";
 
 export const scrapeImages = "/api/v1/scrape-images";
 
-export const downloadImage = "/api/v1/scrape-images";
+export const downloadImage = "/api/v1/download-image";
 
 export const scrapeEmails = "/api/v1/scrape-emails";
 
