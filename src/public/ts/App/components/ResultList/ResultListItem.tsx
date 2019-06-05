@@ -4,6 +4,7 @@ import { ISearchResult } from "../../../../../lib/services/SearchService/SearchR
 import { withAppContext } from "../../../store/store";
 import { IContextProps } from "../../../store/State";
 import Typography from "@material-ui/core/Typography";
+import { supplierData } from "../../../../../lib/routes";
 
 interface IResultListItemProps extends IContextProps {
   result: ISearchResult;
@@ -32,7 +33,7 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
 
   private setResult() {
     this.props.context.setSelectedResult(this.props.result);
-    this.props.context.history.push("/supplier-data");
+    this.props.context.history.push(supplierData);
   }
 }
 

@@ -3,27 +3,28 @@ import path from "path";
 import express from "express";
 import axios from "axios";
 import { searchService, scrapeService } from "./lib/services";
+import { scrapeEmails, downloadImage, scrapeImages, screenshot, search } from "./lib/routes";
 
 export const app = express();
 
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
-app.get("/api/v1/search", async (req: Request, res: Response) => {
+app.get(search, async (req: Request, res: Response) => {
   const data = await searchService.search(req.query.q);
   res.json(data);
 });
 
-app.get("/api/v1/screenshot", async (req: Request, res: Response) => {
+app.get(screenshot, async (req: Request, res: Response) => {
   const image = await scrapeService.screenshotPage(req.query.url);
   res.json(image);
 });
 
-app.get("/api/v1/scrape-images", async (req: Request, res: Response) => {
+app.get(scrapeImages, async (req: Request, res: Response) => {
   const images = await scrapeService.scrapeImages(req.query.url);
   res.json(images);
 });
 
-app.get("/api/v1/download-image", async (req: Request, res: Response) => {
+app.get(downloadImage, async (req: Request, res: Response) => {
   const response = await axios.request({
     url: req.query.q,
     method: "GET",
@@ -32,7 +33,7 @@ app.get("/api/v1/download-image", async (req: Request, res: Response) => {
   await response.data.pipe(res);
 });
 
-app.get("/api/v1/scrape-emails", async (_: Request, res: Response) => {
+app.get(scrapeEmails, async (_: Request, res: Response) => {
   res.json([]);
 });
 

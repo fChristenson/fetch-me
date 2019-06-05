@@ -10,6 +10,7 @@ import { initState, IContextProps } from "../store/State";
 import { withAppContext } from "../store/store";
 import { LogoCrop } from "./components/LogoCrop/LogoCrop";
 import { LoaderPage } from "./components/Loader/LoaderPage";
+import { root, supplierData, crop, loading, search } from "../../../lib/routes";
 
 interface IAppState {
   searchResults: ISearchResult[];
@@ -35,10 +36,10 @@ class AppComponent extends React.Component<IContextProps, IAppState> {
         </AppBar>
         <>
           <Router history={initState.history}>
-            <Route path="/" exact render={() => <ResultList resultList={this.state.searchResults} />} />
-            <Route path="/supplier-data" render={() =>  <SupplierData />} />
-            <Route path="/crop" render={() =>  <LogoCrop />} />
-            <Route path="/loading" render={() =>  <LoaderPage />} />
+            <Route path={root} exact render={() => <ResultList resultList={this.state.searchResults} />} />
+            <Route path={supplierData} render={() =>  <SupplierData />} />
+            <Route path={crop} render={() =>  <LogoCrop />} />
+            <Route path={loading} render={() =>  <LoaderPage />} />
           </Router>
         </>
       </>
@@ -49,11 +50,11 @@ class AppComponent extends React.Component<IContextProps, IAppState> {
     event.preventDefault();
     const q = event.target.q.value;
     this.props.context.setSearchQuery(q);
-    this.props.context.history.replace("/loading");
-    const res = await fetch(`/api/v1/search?q=${q}`);
+    this.props.context.history.replace(loading);
+    const res = await fetch(`${search}?q=${q}`);
     const searchResults: ISearchResult[] = await res.json();
     this.setState({searchResults});
-    this.props.context.history.replace("/");
+    this.props.context.history.replace(root);
   }
 }
 

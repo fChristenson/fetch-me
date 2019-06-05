@@ -3,6 +3,7 @@ import { IContextProps } from "../../../../../store/State";
 import { withAppContext } from "../../../../../store/store";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { crop } from "../../../../../../../lib/routes";
 
 class SupplierDataFormComponent extends React.Component<IContextProps> {
   constructor(props: IContextProps) {
@@ -40,7 +41,7 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
 
   private onSubmit(event: any) {
     event.preventDefault();
-    this.props.context.history.push("/crop");
+    this.props.context.history.push(crop);
   }
 }
 
