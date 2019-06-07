@@ -5,20 +5,20 @@ import Button from "@material-ui/core/Button";
 import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
 
-interface IWebpageEmailsProps extends IContextProps {
+interface IWebpageEmailsResultProps extends IContextProps {
   search: (url: string) => void;
   filter: string;
   contactInformationResult: IContactInformationSearchResult;
 }
 
-class WebpageEmailsItemComponent extends React.Component<IWebpageEmailsProps> {
-  constructor(props: IWebpageEmailsProps) {
+class WebpageEmailsResultComponent extends React.Component<IWebpageEmailsResultProps> {
+  constructor(props: IWebpageEmailsResultProps) {
     super(props);
   }
 
   public render() {
     return (
-      <li className="supplier-data__emails-result">
+      <div className="supplier-data__emails-result">
         <div className="supplier-data__emails-result-section">
           <Typography display="block" variant="caption">Page searched</Typography>
           <a href={this.props.contactInformationResult.url} target="_blank">
@@ -57,9 +57,9 @@ class WebpageEmailsItemComponent extends React.Component<IWebpageEmailsProps> {
             })}
           </ul>
         </div>
-      </li>
+      </div>
     );
   }
 }
 
-export const WebpageEmailsItem = withAppContext(WebpageEmailsItemComponent);
+export const WebpageEmailsResult = withAppContext(WebpageEmailsResultComponent);

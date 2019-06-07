@@ -4,7 +4,7 @@ import { SupplierDataPaper } from "../../SupplierDataPaper";
 import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
 import { IContactInformationSearchResult } from "../../../../../../../lib/services/ScrapeService/ContactInformation";
-import { WebpageEmailsItem } from "./WebpageEmailsItem";
+import { WebpageEmailsResult } from "./WebpageEmailsResult";
 import TextField from "@material-ui/core/TextField";
 import { scrapeEmails } from "../../../../../../../lib/routes";
 
@@ -15,22 +15,22 @@ interface IWebpageEmailsProps extends IContextProps {
 interface IWebpageEmailsState {
   loading: boolean;
   filter: string;
-  contactInformation: IContactInformationSearchResult[];
 }
 
 class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpageEmailsState> {
   constructor(props: any) {
     super(props);
-    this.state = {loading: true, contactInformation: [], filter: ""};
+    this.state = {loading: false, filter: ""};
     this.search = this.search.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
   }
 
   public async componentDidMount() {
-    if (this.props.result) {
+    if (this.props.result && !this.props.context.contactInformation) {
+      this.setState({loading: true});
       const res = await fetch(`${scrapeEmails}?url=${this.props.result.href}`);
       const contactInfo: IContactInformationSearchResult = await res.json();
-      this.setState({contactInformation: this.state.contactInformation.concat(contactInfo)});
+      this.props.context.setContactInformation(contactInfo);
       this.setState({loading: false});
     }
   }
@@ -43,14 +43,11 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
             className="supplier-data__emails-header-filter"
             onChange={this.updateFilter} placeholder="Filter links" name="links" />
         </header>
-        <ul className="supplier-data__emails">
-          {this.state.contactInformation
-            .map((e, i) => <WebpageEmailsItem
+        {this.props.context.contactInformation &&
+            <WebpageEmailsResult
             filter={this.state.filter}
-            key={i}
             search={this.search}
-            contactInformationResult={e} />)}
-        </ul>
+            contactInformationResult={this.props.context.contactInformation} />}
       </SupplierDataPaper>
     );
   }
@@ -66,7 +63,7 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
       this.setState({contactInformation: []});
       const res = await fetch(`${scrapeEmails}?url=${url}`);
       const contactInfo: IContactInformationSearchResult = await res.json();
-      this.setState({contactInformation: this.state.contactInformation.concat(contactInfo)});
+      this.props.context.setContactInformation(contactInfo);
       this.setState({loading: false});
     }
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import { initState, IContextProps, IContext } from "./State";
 import { ISearchResult } from "../../../lib/services/SearchService/SearchResult";
+import { IContactInformationSearchResult } from "../../../lib/services/ScrapeService/ContactInformation";
 
 const {Provider, Consumer} = React.createContext(initState);
 
@@ -15,12 +16,14 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
     this.setSearchQuery = this.setSearchQuery.bind(this);
     this.setSelectedImage = this.setSelectedImage.bind(this);
     this.setSelectedEmail = this.setSelectedEmail.bind(this);
-    const context = {
+    this.setContactInformation = this.setContactInformation.bind(this);
+    const context: IContext = {
       ...initState,
       setSelectedResult: this.setSelectedResult,
       setSelectedEmail: this.setSelectedEmail,
       setSelectedImage: this.setSelectedImage,
       setSearchQuery: this.setSearchQuery,
+      setContactInformation: this.setContactInformation,
     };
     this.state = {context};
   }
@@ -31,6 +34,10 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
         {this.props.children}
       </Provider>
     );
+  }
+
+  private setContactInformation(contactInformation: IContactInformationSearchResult) {
+    this.setState({context: {...this.state.context, contactInformation}});
   }
 
   private setSelectedResult(selectedResult: ISearchResult) {

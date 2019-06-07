@@ -92,10 +92,6 @@
   cursor: pointer;
 }
 
-.supplier-data__emails {
-  list-style: none;
-}
-
 .supplier-data__emails-result {
   margin: var(--margin-md) 0;
   word-break: break-all;
