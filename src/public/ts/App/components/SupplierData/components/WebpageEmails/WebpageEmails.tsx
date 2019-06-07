@@ -5,8 +5,8 @@ import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
 import { IContactInformationSearchResult } from "../../../../../../../lib/services/ScrapeService/ContactInformation";
 import { WebpageEmailsItem } from "./WebpageEmailsItem";
-import { contactEvent, endEvent } from "../../../../../store/socket";
 import TextField from "@material-ui/core/TextField";
+import { scrapeEmails } from "../../../../../../../lib/routes";
 
 interface IWebpageEmailsProps extends IContextProps {
   result?: ISearchResult;
@@ -26,21 +26,13 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
     this.updateFilter = this.updateFilter.bind(this);
   }
 
-  public componentDidMount() {
+  public async componentDidMount() {
     if (this.props.result) {
-      this.props.context.socket.open();
-      this.props.context.socket.emit(contactEvent, this.props.result.href);
-      this.props.context.socket.on(contactEvent, (contactInfo: IContactInformationSearchResult) => {
-        this.setState({contactInformation: this.state.contactInformation.concat(contactInfo)});
-      });
-      this.props.context.socket.on(endEvent, () => {
-        this.setState({loading: false});
-      });
+      const res = await fetch(`${scrapeEmails}?url=${this.props.result.href}`);
+      const contactInfo: IContactInformationSearchResult = await res.json();
+      this.setState({contactInformation: this.state.contactInformation.concat(contactInfo)});
+      this.setState({loading: false});
     }
-  }
-
-  public componentWillUnmount() {
-    this.props.context.socket.close();
   }
 
   public render() {
@@ -67,13 +59,15 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
     this.setState({filter: event.target.value});
   }
 
-  private search(url: string) {
+  private async search(url: string) {
     if (this.props.result) {
-      this.props.context.socket.open();
       this.setState({loading: true});
       // @ts-ignore
       this.setState({contactInformation: []});
-      this.props.context.socket.emit(contactEvent, url);
+      const res = await fetch(`${scrapeEmails}?url=${url}`);
+      const contactInfo: IContactInformationSearchResult = await res.json();
+      this.setState({contactInformation: this.state.contactInformation.concat(contactInfo)});
+      this.setState({loading: false});
     }
   }
 }

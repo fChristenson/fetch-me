@@ -17,6 +17,7 @@ class SupplierDataComponent extends React.Component<IContextProps, ISupplierData
     this.state = {};
   }
 
+  // TODO: add retry button to widget
   public render() {
     return (
       <div className="supplier-data">

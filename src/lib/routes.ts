@@ -4,6 +4,8 @@ export const screenshot = "/api/v1/screenshot";
 
 export const scrapeImages = "/api/v1/scrape-images";
 
+export const scrapeEmails = "/api/v1/scrape-emails";
+
 export const downloadImage = "/api/v1/download-image";
 
 export const root = "/";

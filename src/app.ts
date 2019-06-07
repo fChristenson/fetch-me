@@ -3,10 +3,10 @@ import path from "path";
 import express from "express";
 import axios from "axios";
 import { searchService, scrapeService } from "./lib/services";
-import { downloadImage, scrapeImages, screenshot, search } from "./lib/routes";
+import { downloadImage, scrapeImages, screenshot, search, scrapeEmails } from "./lib/routes";
 
 export const app = express();
-
+// TODO: optimize first call with one endpoint
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
 app.get(search, async (req: Request, res: Response) => {
@@ -22,6 +22,11 @@ app.get(screenshot, async (req: Request, res: Response) => {
 app.get(scrapeImages, async (req: Request, res: Response) => {
   const images = await scrapeService.scrapeImages(req.query.url);
   res.json(images);
+});
+
+app.get(scrapeEmails, async (req: Request, res: Response) => {
+  const result = await scrapeService.getContactInformation(req.query.url);
+  res.json(result);
 });
 
 app.get(downloadImage, async (req: Request, res: Response) => {
