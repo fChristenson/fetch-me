@@ -1,6 +1,7 @@
 import React from "react";
 import { IImage } from "../../../../../../../lib/services/ScrapeService/Image";
 import { ISearchResult } from "../../../../../../../lib/services/SearchService/SearchResult";
+import {screenshot} from "../../../../../../../lib/routes"
 import { SupplierDataPaper } from "../../SupplierDataPaper";
 
 interface IWebpageScreenshotProps {
@@ -21,9 +22,9 @@ export class WebpageScreenshot extends React.Component<IWebpageScreenshotProps, 
 
   public async componentDidMount() {
     if (this.props.result && this.props.result.href) {
-      const res = await fetch(`/api/v1/screenshot?url=${this.props.result.href}`);
-      const screenshot: IImage = await res.json();
-      this.setState({screenshot});
+      const res = await fetch(`${screenshot}?url=${this.props.result.href}`);
+      const image: IImage = await res.json();
+      this.setState({screenshot: image});
     }
   }
 

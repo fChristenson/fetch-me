@@ -4,6 +4,7 @@ import { SupplierDataPaper } from "../../SupplierDataPaper";
 import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
 import { WebpageImage } from "./WebPageImage";
+import { scrapeImages } from "../../../../../../../lib/routes";
 
 interface IWebpageImagesProps extends IContextProps {
   result?: ISearchResult;
@@ -25,7 +26,7 @@ class WebpageImagesComponent extends React.Component<IWebpageImagesProps, IWebpa
 
   public async componentDidMount() {
     if (this.props.result && this.props.result.href) {
-      const res = await fetch(`/api/v1/scrape-images?url=${this.props.result.href}`);
+      const res = await fetch(`${scrapeImages}?url=${this.props.result.href}`);
       const images: string[] = await res.json();
       this.setState({images, loading: false});
     }

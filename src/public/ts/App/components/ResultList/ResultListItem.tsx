@@ -20,7 +20,9 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
     return (
       <li className="result-list__li">
         <div>
-          <Typography display="block" variant="caption">{this.props.result.title}</Typography>
+          <a target="_blank" href={this.props.result.href ? this.props.result.href : "#"} >
+            <Typography className="result-list__li-title" display="block" variant="h2">{this.props.result.title}</Typography>
+          </a>
           <Typography display="block" variant="body1">{this.props.result.description}</Typography>
           <Typography display="block" variant="body1">{this.props.result.href}</Typography>
         </div>

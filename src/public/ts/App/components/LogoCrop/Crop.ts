@@ -6,12 +6,7 @@ export interface ICrop {
   height: number;
 }
 
-/**
- * @param {File} image - Image File Object
- * @param {Object} crop - crop Object
- * @param {String} fileName - Name of the returned file in Promise
- */
-export function getCroppedImg(image: any, crop: ICrop) {
+export function getCroppedImg(image: HTMLImageElement, crop: ICrop) {
   const link = document.createElement("a");
   const canvas = document.createElement("canvas");
   const scaleX = image.naturalWidth / image.width;

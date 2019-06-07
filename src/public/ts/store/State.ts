@@ -26,7 +26,7 @@ export const initState: IContext = {
   setSelectedImage: () => undefined,
   setSearchQuery: () => undefined,
   history: createBrowserHistory(),
-  selectedResult: SearchResult("cat", "cat", "http://www.cat.com"),
+  selectedResult: SearchResult("water", "water", "https://corporate.britannica.com/contact/"),
   searchQuery: "",
-  selectedImage: "/aHR0cDovL3d3dy5uZXRmbGl4LmNvbQ==.png",
+  selectedImage: "",
 };

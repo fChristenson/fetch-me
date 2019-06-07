@@ -6,16 +6,19 @@ import ReactCrop from "react-image-crop";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { ICrop, getCroppedImg } from "./crop";
+import { downloadImage } from "../../../../../lib/routes";
+import { LoaderPage } from "../Loader/LoaderPage";
 
 interface ILogoCropState {
   img?: any;
+  loading: boolean;
   crop: ICrop;
 }
 
 class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
   constructor(props: IContextProps) {
     super(props);
-    this.state = {crop: {x: 0, y: 0, width: 0, height: 0, aspect: 16 / 9}};
+    this.state = {loading: true, crop: {x: 0, y: 0, width: 0, height: 0, aspect: 16 / 9}};
     this.onChange = this.onChange.bind(this);
     this.onImageLoaded = this.onImageLoaded.bind(this);
     this.crop = this.crop.bind(this);
@@ -24,12 +27,13 @@ class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
   public render() {
     return (
       <div className="logo-crop">
+        {this.state.loading && <LoaderPage />}
         <ReactCrop
-          className="logo-crop__react-crop"
-          onImageLoaded={this.onImageLoaded}
-          onChange={this.onChange}
-          crop={this.state.crop}
-          src={`/api/v1/download-image?q=${this.props.context.selectedImage}`} />
+        className="logo-crop__react-crop"
+        onImageLoaded={this.onImageLoaded}
+        onChange={this.onChange}
+        crop={this.state.crop}
+        src={`${downloadImage}?q=${this.props.context.selectedImage}`} />
         <Button
           variant="contained"
           color="primary"
@@ -53,11 +57,11 @@ class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
   }
 
   private onImageLoaded(img: any) {
-    this.setState({img});
+    this.setState({img, loading: false});
   }
 
-  private onChange(crop: ICrop) {
-    this.setState({ crop });
+  private onChange(cropData: ICrop) {
+    this.setState({ crop: cropData });
   }
 }
 
