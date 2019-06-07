@@ -2,7 +2,7 @@ import path from "path";
 import {startBrowser} from "../startBrowser";
 import { IImage, Image } from "./Image";
 import { IContactInformationSearchResult, ContactInformationSearchResult } from "./ContactInformation";
-import { uniq, truthy } from "../../utils";
+import { uniq, truthy, trim } from "../../utils";
 
 export class ScrapeService {
   public async getContactInformation(url: string): Promise<IContactInformationSearchResult> {
@@ -19,8 +19,8 @@ export class ScrapeService {
 
         return {emails: emailResults, links: linkResults};
       });
-      const emails = result.emails.filter(truthy).filter(uniq);
-      const links = result.links.filter(truthy).filter(uniq);
+      const emails = result.emails.filter(truthy).filter(uniq).map(trim);
+      const links = result.links.filter(truthy).filter(uniq).map(trim);
       return ContactInformationSearchResult(emails, url, links);
     });
   }
