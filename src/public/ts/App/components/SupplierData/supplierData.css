@@ -92,6 +92,32 @@
   cursor: pointer;
 }
 
+.supplier-data__items-found-number--red,
+.supplier-data__items-found-number {
+  background: var(--color-green);
+  border-radius: 7px;
+  padding: 2px 6px;
+  color: white;
+}
+
+.supplier-data__emails-result-section-header {
+  display: flex;
+  align-items: center;
+}
+
+.supplier-data__emails-chevron,
+.supplier-data__emails-chevron--down {
+  cursor: pointer;
+}
+
+.supplier-data__emails-chevron--down {
+  transform: rotate(-90deg);
+}
+
+.supplier-data__items-found-number--red {
+  background: var(--color-red);
+}
+
 .supplier-data__emails-result {
   margin: var(--margin-md) 0;
   word-break: break-all;
