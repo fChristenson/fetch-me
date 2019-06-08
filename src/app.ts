@@ -1,11 +1,10 @@
 import path from "path";
-import express, {Request, Response } from "express";
+import express, {Request, Response, NextFunction } from "express";
 import axios from "axios";
 import { searchService, scrapeService } from "./lib/services";
 import { downloadImage, scrapeImages, screenshot, search, scrapeEmails } from "./lib/routes";
 import { catchError } from "./lib/catchError";
 import { StatusError } from "./lib/StatusError";
-import { NextFunction } from "connect";
 
 export const app = express();
 // TODO: optimize first call with one endpoint
