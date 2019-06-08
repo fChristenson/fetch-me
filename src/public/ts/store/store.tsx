@@ -1,7 +1,7 @@
 import React from "react";
 import { initState, IContextProps, IContext } from "./State";
-import { ISearchResult } from "../../../lib/services/SearchService/SearchResult";
-import { IContactInformationSearchResult } from "../../../lib/services/ScrapeService/ContactInformation";
+import { IAction } from "./Action";
+import { reducer } from "./reducer";
 
 const {Provider, Consumer} = React.createContext(initState);
 
@@ -12,18 +12,10 @@ interface IContextProviderState {
 export class ContextProvider extends React.Component<any, IContextProviderState> {
   constructor(props: any) {
     super(props);
-    this.setSelectedResult = this.setSelectedResult.bind(this);
-    this.setSearchQuery = this.setSearchQuery.bind(this);
-    this.setSelectedImage = this.setSelectedImage.bind(this);
-    this.setSelectedEmail = this.setSelectedEmail.bind(this);
-    this.setContactInformation = this.setContactInformation.bind(this);
+    this.dispatch = this.dispatch.bind(this);
     const context: IContext = {
       ...initState,
-      setSelectedResult: this.setSelectedResult,
-      setSelectedEmail: this.setSelectedEmail,
-      setSelectedImage: this.setSelectedImage,
-      setSearchQuery: this.setSearchQuery,
-      setContactInformation: this.setContactInformation,
+      dispatch: this.dispatch,
     };
     this.state = {context};
   }
@@ -36,24 +28,9 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
     );
   }
 
-  private setContactInformation(contactInformation: IContactInformationSearchResult) {
-    this.setState({context: {...this.state.context, contactInformation}});
-  }
-
-  private setSelectedResult(selectedResult: ISearchResult) {
-    this.setState({context: {...this.state.context, selectedResult}});
-  }
-
-  private setSelectedEmail(email: string) {
-    this.setState({context: {...this.state.context, selectedEmail: email}});
-  }
-
-  private setSelectedImage(url: string) {
-    this.setState({context: {...this.state.context, selectedImage: url}});
-  }
-
-  private setSearchQuery(q: string) {
-    this.setState({context: {...this.state.context, searchQuery: q}});
+  private dispatch(action: IAction) {
+    const context = reducer(this.state.context, action);
+    this.setState({context});
   }
 }
 

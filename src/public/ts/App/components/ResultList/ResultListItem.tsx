@@ -5,6 +5,7 @@ import { withAppContext } from "../../../store/store";
 import { IContextProps } from "../../../store/State";
 import Typography from "@material-ui/core/Typography";
 import { supplierData } from "../../../../../lib/routes";
+import { SetContactInfo, SetSelectedResult } from "../../../store/Action";
 
 interface IResultListItemProps extends IContextProps {
   result: ISearchResult;
@@ -21,7 +22,10 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
       <li className="result-list__li">
         <div>
           <a target="_blank" href={this.props.result.href ? this.props.result.href : "#"} >
-            <Typography className="result-list__li-title" display="block" variant="h2">{this.props.result.title}</Typography>
+            <Typography
+              className="result-list__li-title"
+              display="block"
+              variant="h2">{this.props.result.title}</Typography>
           </a>
           <Typography display="block" variant="body1">{this.props.result.description}</Typography>
           <Typography display="block" variant="body1">{this.props.result.href}</Typography>
@@ -34,7 +38,8 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
   }
 
   private setResult() {
-    this.props.context.setSelectedResult(this.props.result);
+    this.props.context.dispatch(SetContactInfo(undefined));
+    this.props.context.dispatch(SetSelectedResult(this.props.result));
     this.props.context.history.push(supplierData);
   }
 }

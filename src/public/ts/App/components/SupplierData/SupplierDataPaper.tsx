@@ -3,11 +3,14 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { Loader } from "../Loader/Loader";
 import Switch from "@material-ui/core/Switch";
+import { Retry } from "../Retry/Retry";
 
 interface ISupplierDataPaperProps {
   title: string;
   loading?: boolean;
   titleHref?: string;
+  failed: boolean;
+  onRetry: () => void;
   variant?: undefined;
 }
 
@@ -15,6 +18,8 @@ interface ISwitchProps {
   title: string;
   loading?: boolean;
   titleHref?: string;
+  failed: boolean;
+  onRetry: () => void;
   variant?: "switch";
   onSwitch: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }
@@ -38,7 +43,8 @@ export class SupplierDataPaper extends React.Component<IProps> {
           </div>
         </div>
         <div className="supplier-data__paper-content-container">
-          {this.props.children}
+          {this.props.failed && <Retry onRetry={this.props.onRetry} />}
+          {!this.props.failed && this.props.children}
         </div>
       </Paper>
     );

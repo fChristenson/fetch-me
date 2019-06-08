@@ -11,17 +11,20 @@ import { withAppContext } from "../store/store";
 import { LogoCrop } from "./components/LogoCrop/LogoCrop";
 import { LoaderPage } from "./components/Loader/LoaderPage";
 import { root, supplierData, crop, loading, search } from "../../../lib/routes";
+import { SetSearchQuery, SetSearchResults } from "../store/Action";
 
 interface IAppState {
   searchResults: ISearchResult[];
   selectedResult?: ISearchResult;
+  failed: boolean;
 }
 
 class AppComponent extends React.Component<IContextProps, IAppState> {
   constructor(props: any) {
     super(props);
     this.getQueryResult = this.getQueryResult.bind(this);
-    this.state = {searchResults: []};
+    this.state = {searchResults: [], failed: false};
+    this.retry = this.retry.bind(this);
   }
 
   public render() {
@@ -36,7 +39,10 @@ class AppComponent extends React.Component<IContextProps, IAppState> {
         </AppBar>
         <>
           <Router history={initState.history}>
-            <Route path={root} exact render={() => <ResultList resultList={this.state.searchResults} />} />
+            <Route path={root} exact render={() => <ResultList
+              onRetry={this.retry}
+              failed={this.state.failed}
+              resultList={this.props.context.searchResults} />} />
             <Route path={supplierData} render={() =>  <SupplierData />} />
             <Route path={crop} render={() =>  <LogoCrop />} />
             <Route path={loading} render={() =>  <LoaderPage />} />
@@ -46,15 +52,35 @@ class AppComponent extends React.Component<IContextProps, IAppState> {
     );
   }
 
+  private async retry() {
+    this.setState({failed: false});
+    this.props.context.history.replace(loading);
+    const res = await fetch(`${search}?q=${this.props.context.searchQuery}`);
+    if (res.status < 400) {
+      const searchResults: ISearchResult[] = await res.json();
+      this.props.context.dispatch(SetSearchResults(searchResults));
+      this.props.context.history.replace(root);
+    } else {
+      this.setState({failed: true});
+      this.props.context.history.replace(root);
+    }
+  }
+
   private async getQueryResult(event: any) {
     event.preventDefault();
+    this.setState({failed: false});
     const q = event.target.q.value;
-    this.props.context.setSearchQuery(q);
+    this.props.context.dispatch(SetSearchQuery(q));
     this.props.context.history.replace(loading);
     const res = await fetch(`${search}?q=${q}`);
-    const searchResults: ISearchResult[] = await res.json();
-    this.setState({searchResults});
-    this.props.context.history.replace(root);
+    if (res.status < 400) {
+      const searchResults: ISearchResult[] = await res.json();
+      this.props.context.dispatch(SetSearchResults(searchResults));
+      this.props.context.history.replace(root);
+    } else {
+      this.setState({failed: true});
+      this.props.context.history.replace(root);
+    }
   }
 }
 

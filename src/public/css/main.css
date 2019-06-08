@@ -5,3 +5,4 @@
 @import "../ts/App/components/SupplierData/supplierData.css";
 @import "../../../node_modules/react-image-crop/dist/ReactCrop.css";
 @import "../ts/App/components/LogoCrop/logoCrop.css";
+@import "../ts/App/components/Retry/retry.css";

@@ -7,47 +7,59 @@ import { IContactInformationSearchResult } from "../../../../../../../lib/servic
 import { WebpageEmailsResult } from "./WebpageEmailsResult";
 import TextField from "@material-ui/core/TextField";
 import { scrapeEmails } from "../../../../../../../lib/routes";
+import { SetContactInfo } from "../../../../../store/Action";
 
 interface IWebpageEmailsProps extends IContextProps {
   result?: ISearchResult;
 }
 
 interface IWebpageEmailsState {
+  failed: boolean;
   loading: boolean;
   filter: string;
+  url: string;
 }
 
 class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpageEmailsState> {
   constructor(props: any) {
     super(props);
-    this.state = {loading: false, filter: ""};
+    const url = this.props.result && this.props.result.href || "";
+    this.state = {failed: false, loading: false, filter: "", url};
     this.search = this.search.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
   }
 
   public async componentDidMount() {
-    if (this.props.result && !this.props.context.contactInformation) {
+    if (this.state.url) { // TODO: only update on new stuff
       this.setState({loading: true});
-      const res = await fetch(`${scrapeEmails}?url=${this.props.result.href}`);
-      const contactInfo: IContactInformationSearchResult = await res.json();
-      this.props.context.setContactInformation(contactInfo);
-      this.setState({loading: false});
+      const res = await fetch(`${scrapeEmails}?url=${this.state.url}`);
+      if (res.status < 400) {
+        const contactInfo: IContactInformationSearchResult = await res.json();
+        this.props.context.dispatch(SetContactInfo(contactInfo));
+        this.setState({loading: false});
+      } else {
+        this.setState({loading: false, failed: true});
+      }
     }
   }
 
   public render() {
     return (
-      <SupplierDataPaper title="Emails" loading={this.state.loading}>
+      <SupplierDataPaper
+        title="Emails"
+        loading={this.state.loading}
+        onRetry={() => this.search(this.state.url)}
+        failed={this.state.failed}>
         <header className="supplier-data__emails-header">
-          <TextField
-            className="supplier-data__emails-header-filter"
-            onChange={this.updateFilter} placeholder="Filter links" name="links" />
+        <TextField
+          className="supplier-data__emails-header-filter"
+          onChange={this.updateFilter} placeholder="Filter links" name="links" />
         </header>
         {this.props.context.contactInformation &&
-            <WebpageEmailsResult
-            filter={this.state.filter}
-            search={this.search}
-            contactInformationResult={this.props.context.contactInformation} />}
+          <WebpageEmailsResult
+          filter={this.state.filter}
+          search={this.search}
+          contactInformationResult={this.props.context.contactInformation} />}
       </SupplierDataPaper>
     );
   }
@@ -57,15 +69,16 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
   }
 
   private async search(url: string) {
-    if (this.props.result) {
-      this.setState({loading: true});
-      // @ts-ignore
-      this.setState({contactInformation: []});
+      this.setState({loading: true, url, failed: false});
+      this.props.context.dispatch(SetContactInfo(undefined));
       const res = await fetch(`${scrapeEmails}?url=${url}`);
-      const contactInfo: IContactInformationSearchResult = await res.json();
-      this.props.context.setContactInformation(contactInfo);
-      this.setState({loading: false});
-    }
+      if (res.status < 400) {
+        const contactInfo: IContactInformationSearchResult = await res.json();
+        this.props.context.dispatch(SetContactInfo(contactInfo));
+        this.setState({loading: false});
+      } else {
+        this.setState({loading: false, failed: true});
+      }
   }
 }
 

@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withAppContext } from "../../../../../store/store";
 import { IContextProps } from "../../../../../store/State";
+import { SetSelectedEmail } from "../../../../../store/Action";
 
 interface IWebpageEmailsResultProps extends IContextProps {
   search: (url: string) => void;
@@ -31,7 +32,7 @@ class WebpageEmailsResultComponent extends React.Component<IWebpageEmailsResultP
             {this.props.contactInformationResult.emails.map((str, i) => {
               return <li
                 role="button"
-                onClick={ () => this.props.context.setSelectedEmail(str)}
+                onClick={ () => this.props.context.dispatch(SetSelectedEmail(str))}
                 className="supplier-data__emails-result-list-item" key={i}>
                 {<Typography variant="body2">{str}</Typography>}
               </li>;

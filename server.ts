@@ -7,3 +7,15 @@ app.listen(port, () => {
   console.log("Started on port", port);
   console.log("--------------------------");
 });
+
+process.on("uncaughtException", (e) => {
+  console.log("uncaughtException", e.message);
+  console.log('--------------------------');
+  process.exit(1);
+});
+
+process.on("unhandledRejection", () => {
+  console.log("Process ended unexpectedly");
+  console.log('--------------------------');
+  process.exit(1);
+});

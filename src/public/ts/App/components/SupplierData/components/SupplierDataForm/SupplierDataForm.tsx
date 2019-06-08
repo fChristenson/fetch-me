@@ -4,6 +4,7 @@ import { withAppContext } from "../../../../../store/store";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { crop } from "../../../../../../../lib/routes";
+import { SetSelectedEmail, SetSelectedImage } from "../../../../../store/Action";
 
 class SupplierDataFormComponent extends React.Component<IContextProps> {
   constructor(props: IContextProps) {
@@ -38,11 +39,11 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
   }
 
   private updateEmail(event: React.ChangeEvent<HTMLInputElement>) {
-    this.props.context.setSelectedEmail(event.target.value);
+    this.props.context.dispatch(SetSelectedEmail(event.target.value));
   }
 
   private updateLogo(event: React.ChangeEvent<HTMLInputElement>) {
-    this.props.context.setSelectedImage(event.target.value);
+    this.props.context.dispatch(SetSelectedImage(event.target.value));
   }
 
   private onSubmit(event: any) {

@@ -1,0 +1,15 @@
+.retry {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.retry-page {
+  width: 100%;
+  padding: calc(var(--margin-md) * 2);
+}
+
+.retry__btn {
+  margin-top: var(--margin-md) !important;
+}
