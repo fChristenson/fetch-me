@@ -2,42 +2,26 @@ import { IContext } from "./State";
 import { IAction, ActionType } from "./Action";
 
 export function reducer(state: IContext, action: IAction): IContext {
-  console.log("Start", state, action);
-  console.log('--------------------------');
-
-  let result;
-
   switch (action.type) {
     case ActionType.SET_CONTACT_INFO:
-      result = {...state, contactInformation: action.value};
-      break;
+      return {...state, contactInformation: action.value};
 
     case ActionType.SET_SEARCH_QUERY:
-      result = {...state, searchQuery: action.value};
-      break;
+        return {...state, searchQuery: action.value};
 
     case ActionType.SET_SEARCH_RESULTS:
-      result = {...state, searchResults: action.value};
-      break;
+        return {...state, searchResults: action.value};
 
     case ActionType.SET_SELECTED_EMAIL:
-      result = {...state, selectedEmail: action.value};
-      break;
+        return {...state, selectedEmail: action.value};
 
     case ActionType.SET_SELECTED_IMAGE:
-      result = {...state, selectedImage: action.value};
-      break;
+        return {...state, selectedImage: action.value};
 
     case ActionType.SET_SELECTED_RESULT:
-      result = {...state, selectedResult: action.value};
-      break;
+        return {...state, selectedResult: action.value};
 
     default:
-      result = state;
-      break;
+      return state;
   }
-
-  console.log("Result", result);
-  console.log('--------------------------');
-  return result;
 }
