@@ -32,7 +32,7 @@ class SupplierDataFormComponent extends React.Component<IContextProps> {
           name="logo"
           value={this.props.context.selectedImage}></TextField>
           <div className="supplier-data__form-field">
-            <Button color="primary" variant="contained" type="submit">Done</Button>
+            <Button color="primary" variant="contained" type="submit">Crop</Button>
           </div>
       </form>
     );

@@ -20,15 +20,18 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
   public render() {
     return (
       <li className="result-list__li">
-        <div>
+        <div className="result-list__li-container">
           <a target="_blank" href={this.props.result.href ? this.props.result.href : "#"} >
             <Typography
               className="result-list__li-title"
-              display="block"
               variant="h2">{this.props.result.title}</Typography>
           </a>
-          <Typography display="block" variant="body1">{this.props.result.description}</Typography>
-          <Typography display="block" variant="body1">{this.props.result.href}</Typography>
+          <Typography
+            className="result-list__li-description"
+            variant="body1">{this.props.result.description}</Typography>
+          <Typography
+            className="result-list__li-url"
+            variant="body1">{this.props.result.href}</Typography>
         </div>
         <Button color="primary" variant="contained" onClick={this.setResult}>
           Select
