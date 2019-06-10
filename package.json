@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run server:build && npm run webpack:build && npm run postcss:build",
+    "build:async": "npm run server:build & npm run webpack:build & npm run postcss:build",
     "start": "nodemon --exec ts-node ./server.ts",
+    "server:build": "npx tsc --build ./tsconfig.prod.json",
+    "webpack:build": "npx webpack --config webpack.config.prod.js",
     "webpack:watch": "npx webpack --watch",
+    "postcss:build": "npx postcss ./src/public/css/main.css -o ./dist-app/dist/main.css",
     "postcss:watch": "npx postcss ./src/public/css/main.css -o ./dist/main.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Fredrik Christenson",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "4.0.1",

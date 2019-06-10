@@ -13,5 +13,3 @@ export const root = "/";
 export const supplierData = "/supplier-data";
 
 export const crop = "/crop";
-
-export const loading = "/loading";
