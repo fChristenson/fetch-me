@@ -8,29 +8,38 @@ import Typography from "@material-ui/core/Typography";
 import { ICrop, getCroppedImg } from "./crop";
 import { downloadImage } from "../../../../../lib/routes";
 import { LoaderPage } from "../Loader/LoaderPage";
+import { RetryPage } from "../Retry/RetryPage";
 
 interface ILogoCropState {
   img?: any;
   loading: boolean;
+  failed: boolean;
   crop: ICrop;
 }
 
 class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
   constructor(props: IContextProps) {
     super(props);
-    this.state = {loading: true, crop: {x: 0, y: 0, width: 0, height: 0, aspect: 16 / 9}};
+    this.state = {failed: false, loading: true, crop: {x: 0, y: 0, width: 0, height: 0, aspect: 16 / 9}};
     this.onChange = this.onChange.bind(this);
     this.onImageLoaded = this.onImageLoaded.bind(this);
+    this.onImageError = this.onImageError.bind(this);
     this.crop = this.crop.bind(this);
+    this.onRetry = this.onRetry.bind(this);
   }
 
   public render() {
+    if (this.state.failed) {
+      return <RetryPage onRetry={this.onRetry} />;
+    }
+
     return (
       <div className="logo-crop">
         {this.state.loading && <LoaderPage />}
         <ReactCrop
         className="logo-crop__react-crop"
         onImageLoaded={this.onImageLoaded}
+        onImageError={this.onImageError}
         onChange={this.onChange}
         crop={this.state.crop}
         src={`${downloadImage}?q=${this.props.context.selectedImage}`} />
@@ -54,6 +63,14 @@ class LogoCropComponent extends React.Component<IContextProps, ILogoCropState> {
       link.href = this.state.img.src;
       link.click();
     }
+  }
+
+  private onRetry() {
+    this.setState({loading: true, failed: false});
+  }
+
+  private onImageError() {
+    this.setState({failed: true});
   }
 
   private onImageLoaded(img: any) {
