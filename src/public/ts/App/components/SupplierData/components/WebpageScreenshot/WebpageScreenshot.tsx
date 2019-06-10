@@ -17,13 +17,14 @@ interface IWebpageScreenshotState {
 export class WebpageScreenshot extends React.Component<IWebpageScreenshotProps, IWebpageScreenshotState> {
   constructor(props: any) {
     super(props);
-    this.state = {loading: true, failed: false};
+    this.state = {loading: false, failed: false};
     this.onLoad = this.onLoad.bind(this);
     this.retry = this.retry.bind(this);
   }
 
   public async componentDidMount() {
     if (this.props.result && this.props.result.href) {
+      this.setState({loading: true});
       const res = await fetch(`${screenshot}?url=${this.props.result.href}`);
       if (res.status < 400) {
         const image: IImage = await res.json();

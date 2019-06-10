@@ -21,7 +21,7 @@ interface IWebpageImagesState {
 class WebpageImagesComponent extends React.Component<IWebpageImagesProps, IWebpageImagesState> {
   constructor(props: any) {
     super(props);
-    this.state = {failed: false, loading: true, images: [], darkBackground: false};
+    this.state = {failed: false, loading: false, images: [], darkBackground: false};
     this.changeBackground = this.changeBackground.bind(this);
     this.selectImage = this.selectImage.bind(this);
     this.retry = this.retry.bind(this);
@@ -29,6 +29,7 @@ class WebpageImagesComponent extends React.Component<IWebpageImagesProps, IWebpa
 
   public async componentDidMount() {
     if (this.props.result && this.props.result.href) {
+      this.setState({loading: true});
       const res = await fetch(`${scrapeImages}?url=${this.props.result.href}`);
       if (res.status < 400) {
         const images: string[] = await res.json();
