@@ -41,8 +41,7 @@ class ResultListItemComponent extends React.Component<IResultListItemProps> {
   }
 
   private setResult() {
-    this.props.context.dispatch(SetContactInfo(undefined));
-    this.props.context.dispatch(SetSelectedResult(this.props.result));
+    this.props.context.dispatch(SetContactInfo(undefined), SetSelectedResult(this.props.result));
     this.props.context.history.push(supplierData);
   }
 }

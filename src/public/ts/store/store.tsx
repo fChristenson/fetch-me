@@ -28,8 +28,8 @@ export class ContextProvider extends React.Component<any, IContextProviderState>
     );
   }
 
-  private dispatch(action: IAction) {
-    const context = reducer(this.state.context, action);
+  private dispatch(...actions: IAction[]) {
+    const context = actions.reduce(reducer, this.state.context);
     this.setState({context});
   }
 }

@@ -30,7 +30,7 @@ class WebpageEmailsComponent extends React.Component<IWebpageEmailsProps, IWebpa
   }
 
   public async componentDidMount() {
-    if (this.state.url) { // TODO: only update on new stuff
+    if (this.state.url && !this.props.context.contactInformation) { // TODO: only update on new stuff
       this.setState({loading: true});
       const res = await fetch(`${scrapeEmails}?url=${this.state.url}`);
       if (res.status < 400) {
