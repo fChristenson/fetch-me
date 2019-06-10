@@ -36,12 +36,6 @@ class AppComponent extends React.Component<IContextProps, IAppState> {
             <form onSubmit={this.getQueryResult}>
               <TextField className="app__search" name="q" placeholder="Search" variant="outlined" />
             </form>
-            <span>
-              Selected email: {this.props.context.selectedEmail || "undefined"}
-            </span>
-            <span>
-              Selected image: {this.props.context.selectedImage || "undefined"}
-            </span>
           </Toolbar>
         </AppBar>
         {this.state.loading && <LoaderPage />}

@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run server:build && npm run webpack:build && npm run postcss:build",
-    "build:async": "npm run server:build & npm run webpack:build & npm run postcss:build",
     "start": "nodemon --exec ts-node ./server.ts",
     "server:build": "npx tsc --build ./tsconfig.prod.json",
     "webpack:build": "npx webpack --config webpack.config.prod.js",
@@ -27,7 +26,8 @@
     "react-dom": "16.8.6",
     "react-image-crop": "7.0.3",
     "react-router-dom": "5.0.0",
-    "socket.io": "2.2.0"
+    "socket.io": "2.2.0",
+    "typescript": "3.4.5"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
@@ -47,7 +47,6 @@
     "ts-loader": "6.0.1",
     "ts-node": "8.2.0",
     "tslint": "5.16.0",
-    "typescript": "3.4.5",
     "webpack": "4.32.2",
     "webpack-cli": "3.3.2"
   }

@@ -6,6 +6,7 @@ export async function startBrowser<T>(codeToRun: (browser: Browser) => Promise<T
       width: 1920,
       height: 1080,
     },
+    args: ["--no-sandbox"],
   });
 
   try {
