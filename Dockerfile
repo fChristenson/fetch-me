@@ -1,10 +1,12 @@
 FROM alekzonder/puppeteer:latest
 
+USER root
+
+WORKDIR /app
+
 COPY package.json /app
 COPY npm-shrinkwrap.json /app
 COPY ./dist-app/ /app
-
-WORKDIR /app
 
 RUN npm install --production
 
